@@ -17,8 +17,7 @@ import static com.weddini.throttling.ThrottlingType.SpEL;
 
 
 public class ThrottlingEvaluatorImpl implements ThrottlingEvaluator {
-
-    private final Log logger = LogFactory.getLog(getClass());
+    private static final Log log = LogFactory.getLog(ThrottlingEvaluatorImpl.class);
 
     private final SpElEvaluator spElEvaluator;
 
@@ -34,8 +33,8 @@ public class ThrottlingEvaluatorImpl implements ThrottlingEvaluator {
             try {
                 value = spElEvaluator.evaluate(throttlingConfig.expression(), bean, args, clazz, method);
             } catch (Throwable t) {
-                if (logger.isErrorEnabled()) {
-                    logger.error("exception occurred while evaluating SpEl expression = '" +
+                if (log.isErrorEnabled()) {
+                    log.error("exception occurred while evaluating SpEl expression = '" +
                             throttlingConfig.expression() + "', please check @Throttling configuration.", t);
                 }
             }
@@ -46,15 +45,15 @@ public class ThrottlingEvaluatorImpl implements ThrottlingEvaluator {
             try {
                 servletRequest = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
             } catch (IllegalStateException e) {
-                if (logger.isErrorEnabled()) {
-                    logger.error("no RequestAttributes object is bound to the current thread, " +
+                if (log.isErrorEnabled()) {
+                    log.error("no RequestAttributes object is bound to the current thread, " +
                             "please check @Throttling configuration.", e);
                 }
             }
 
             if (servletRequest == null) {
-                if (logger.isErrorEnabled()) {
-                    logger.error("cannot find HttpServletRequest in RequestContextHolder while processing " +
+                if (log.isErrorEnabled()) {
+                    log.error("cannot find HttpServletRequest in RequestContextHolder while processing " +
                             "@Throttling annotation with type '" + throttlingConfig.type().name() + "'");
                 }
             } else {
@@ -68,8 +67,8 @@ public class ThrottlingEvaluatorImpl implements ThrottlingEvaluator {
                                     .map(Cookie::getValue)
                                     .orElse(null);
                         } else {
-                            if (logger.isWarnEnabled()) {
-                                logger.warn("cannot resolve HTTP cookie value for empty cookie name, " +
+                            if (log.isWarnEnabled()) {
+                                log.warn("cannot resolve HTTP cookie value for empty cookie name, " +
                                         "please check @Throttling configuration.");
                             }
                         }
@@ -79,8 +78,8 @@ public class ThrottlingEvaluatorImpl implements ThrottlingEvaluator {
                         if (!StringUtils.isEmpty(throttlingConfig.headerName())) {
                             value = servletRequest.getHeader(throttlingConfig.headerName());
                         } else {
-                            if (logger.isWarnEnabled()) {
-                                logger.warn("cannot resolve HTTP header value for empty header name, " +
+                            if (log.isWarnEnabled()) {
+                                log.warn("cannot resolve HTTP header value for empty header name, " +
                                         "please check @Throttling configuration.");
                             }
                         }
@@ -90,8 +89,8 @@ public class ThrottlingEvaluatorImpl implements ThrottlingEvaluator {
                         if (servletRequest.getUserPrincipal() != null) {
                             value = servletRequest.getUserPrincipal().getName();
                         } else {
-                            if (logger.isWarnEnabled()) {
-                                logger.warn("cannot resolve servletRequest.getUserPrincipal().getName() " +
+                            if (log.isWarnEnabled()) {
+                                log.warn("cannot resolve servletRequest.getUserPrincipal().getName() " +
                                         "since servletRequest.getUserPrincipal() is null.");
                             }
                         }

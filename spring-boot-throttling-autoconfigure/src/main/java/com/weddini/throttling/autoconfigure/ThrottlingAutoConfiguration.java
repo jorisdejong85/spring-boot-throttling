@@ -1,5 +1,7 @@
 package com.weddini.throttling.autoconfigure;
 
+import com.weddini.throttling.service.ThrottlingDataService;
+import com.weddini.throttling.service.ThrottlingDataServiceImpl;
 import com.weddini.throttling.service.ThrottlingEvaluator;
 import com.weddini.throttling.service.ThrottlingEvaluatorImpl;
 import com.weddini.throttling.service.ThrottlingService;
@@ -34,14 +36,14 @@ public class ThrottlingAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public ThrottlingBeanPostProcessor throttlingBeanPostProcessor() {
-        return new ThrottlingBeanPostProcessor(throttlingEvaluator(), throttlingService());
+        return new ThrottlingBeanPostProcessor(throttlingService());
     }
 
     @Bean
     @ConditionalOnMissingBean
     @ConditionalOnWebApplication
     public ThrottlingInterceptor throttlingInterceptor() {
-        return new ThrottlingInterceptor(throttlingEvaluator(), throttlingService());
+        return new ThrottlingInterceptor(throttlingService());
     }
 
     @Bean
@@ -55,6 +57,11 @@ public class ThrottlingAutoConfiguration {
         };
     }
 
+    @Bean
+    @ConditionalOnMissingBean
+    public ThrottlingService throttlingService() {
+        return new ThrottlingServiceImpl(throttlingEvaluator(), throttlingDataService());
+    }
 
     @Bean
     @ConditionalOnMissingBean
@@ -64,8 +71,8 @@ public class ThrottlingAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public ThrottlingService throttlingService() {
-        return new ThrottlingServiceImpl(throttlingProperties.getLruCacheCapacity() != null ?
+    public ThrottlingDataService throttlingDataService() {
+        return new ThrottlingDataServiceImpl(throttlingProperties.getLruCacheCapacity() != null ?
                 throttlingProperties.getLruCacheCapacity() : DEFAULT_LRU_CACHE_CAPACITY);
     }
 

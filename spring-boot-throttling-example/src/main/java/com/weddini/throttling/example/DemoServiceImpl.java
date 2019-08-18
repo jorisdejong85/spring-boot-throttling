@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 public class DemoServiceImpl implements DemoService {
-    private static final Logger LOG = LoggerFactory.getLogger(DemoServiceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(DemoServiceImpl.class);
 
     /**
      * Throttling configuration:
@@ -25,7 +25,7 @@ public class DemoServiceImpl implements DemoService {
             type = ThrottlingType.SpEL,
             expression = "#model.userName")
     public Model computeWithSpElThrottling(Model model) {
-        LOG.info("computeWithSpElThrottling..., userName = {}", model.getUserName());
+        log.info("computeWithSpElThrottling..., userName = {}", model.getUserName());
         return model;
     }
 
@@ -41,7 +41,7 @@ public class DemoServiceImpl implements DemoService {
             type = ThrottlingType.HeaderValue,
             headerName = "X-Forwarded-For")
     public Model computeWithHttpHeaderThrottling(Model model) {
-        LOG.info("computeWithHttpHeaderThrottling..., userName = {}", model.getUserName());
+        log.info("computeWithHttpHeaderThrottling..., userName = {}", model.getUserName());
         return model;
     }
 
@@ -54,7 +54,7 @@ public class DemoServiceImpl implements DemoService {
     @Override
     @Throttling(limit = 5, timeUnit = TimeUnit.MINUTES)
     public Model computeWithHttpRemoteAddrThrottling(Model model) {
-        LOG.info("computeWithHttpRemoteAddrThrottling..., userName = {}", model.getUserName());
+        log.info("computeWithHttpRemoteAddrThrottling..., userName = {}", model.getUserName());
         return model;
     }
 }

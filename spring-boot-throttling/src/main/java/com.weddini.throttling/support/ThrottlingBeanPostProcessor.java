@@ -2,8 +2,6 @@ package com.weddini.throttling.support;
 
 import com.weddini.throttling.Throttling;
 import com.weddini.throttling.ThrottlingException;
-import com.weddini.throttling.ThrottlingKey;
-import com.weddini.throttling.service.ThrottlingEvaluator;
 import com.weddini.throttling.service.ThrottlingService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -31,18 +29,12 @@ import static org.springframework.core.annotation.AnnotationUtils.findAnnotation
  * @author Nikolay Papakha (nikolay.papakha@gmail.com)
  */
 public class ThrottlingBeanPostProcessor implements BeanPostProcessor {
+    private static final Log logger = LogFactory.getLog(BeanPostProcessor.class);
 
-    private final Log logger = LogFactory.getLog(getClass());
-
-
+    private final ThrottlingService throttlingService;
     private final Map<String, Class> beanNamesToOriginalClasses;
 
-    private final ThrottlingEvaluator throttlingEvaluator;
-    private final ThrottlingService throttlingService;
-
-
-    public ThrottlingBeanPostProcessor(ThrottlingEvaluator throttlingEvaluator, ThrottlingService throttlingService) {
-        this.throttlingEvaluator = throttlingEvaluator;
+    public ThrottlingBeanPostProcessor(ThrottlingService throttlingService) {
         this.throttlingService = throttlingService;
         beanNamesToOriginalClasses = new HashMap<>();
     }
@@ -84,29 +76,11 @@ public class ThrottlingBeanPostProcessor implements BeanPostProcessor {
 
         return Proxy.newProxyInstance(clazz.getClassLoader(), clazz.getInterfaces(), (proxy, method, args) -> {
 
-            Throttling annotation = findAnnotation(clazz.getMethod(method.getName(), method.getParameterTypes()), Throttling.class);
+            Throttling annotation =
+                    findAnnotation(clazz.getMethod(method.getName(), method.getParameterTypes()), Throttling.class);
 
             if (annotation != null) {
-
-
-                final String evaluatedValue = throttlingEvaluator.evaluate(annotation, bean, clazz, method, args);
-
-                ThrottlingKey key = ThrottlingKey.builder()
-                        .method(method)
-                        .annotation(annotation)
-                        .evaluatedValue(evaluatedValue)
-                        .build();
-
-                boolean isAllowed = throttlingService.throttle(key, evaluatedValue);
-
-                if (!isAllowed) {
-                    if (logger.isDebugEnabled()) {
-                        logger.debug("cannot proceed with a method call due to @Throttling configuration, type="
-                                + annotation.type() + ", value=" + evaluatedValue);
-                    }
-                    throw new ThrottlingException();
-                }
-
+                throttlingService.throttle(bean, clazz, method, args, annotation);
             }
 
             // call original method

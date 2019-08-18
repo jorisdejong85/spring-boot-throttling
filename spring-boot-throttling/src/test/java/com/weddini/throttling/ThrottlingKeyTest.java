@@ -42,14 +42,14 @@ public class ThrottlingKeyTest {
         // method1 + annotation1 + "127.0.0.1"
         ThrottlingKey key1 = ThrottlingKey.builder()
                 .method(method1)
-                .annotation(annotation1)
+                .throttling(annotation1)
                 .evaluatedValue("127.0.0.1")
                 .build();
 
         // method1 + annotation1 + "test"
         ThrottlingKey key4 = ThrottlingKey.builder()
                 .method(method1)
-                .annotation(annotation1)
+                .throttling(annotation1)
                 .evaluatedValue("test")
                 .build();
 
@@ -58,7 +58,7 @@ public class ThrottlingKeyTest {
         // method2 + annotation2 + "test"
         ThrottlingKey key2 = ThrottlingKey.builder()
                 .method(method2)
-                .annotation(annotation2)
+                .throttling(annotation2)
                 .evaluatedValue("test")
                 .build();
 
@@ -67,7 +67,7 @@ public class ThrottlingKeyTest {
         // method1 + annotation1 + "127.0.0.1"
         ThrottlingKey key3 = ThrottlingKey.builder()
                 .method(method1)
-                .annotation(annotation1)
+                .throttling(annotation1)
                 .evaluatedValue("127.0.0.1")
                 .build();
 

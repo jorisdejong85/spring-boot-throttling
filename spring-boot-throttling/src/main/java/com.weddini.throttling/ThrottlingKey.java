@@ -96,7 +96,7 @@ public class ThrottlingKey {
             return this;
         }
 
-        public Builder annotation(Throttling throttling) {
+        public Builder throttling(Throttling throttling) {
             this.limit = throttling.limit();
             this.type = throttling.type();
             this.timeUnit = throttling.timeUnit();
