@@ -3,14 +3,14 @@ package com.weddini.throttling.service;
 import com.weddini.throttling.Throttling;
 import com.weddini.throttling.ThrottlingException;
 import com.weddini.throttling.ThrottlingKey;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.method.HandlerMethod;
 
 import java.lang.reflect.Method;
 
 public class ThrottlingServiceImpl implements ThrottlingService {
-    private static final Log logger = LogFactory.getLog(ThrottlingServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(ThrottlingServiceImpl.class);
 
     private final ThrottlingEvaluator throttlingEvaluator;
     private final ThrottlingDataService throttlingDataService;

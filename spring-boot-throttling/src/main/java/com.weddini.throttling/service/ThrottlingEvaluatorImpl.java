@@ -2,8 +2,8 @@ package com.weddini.throttling.service;
 
 import com.weddini.throttling.Throttling;
 import com.weddini.throttling.support.SpElEvaluator;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -17,7 +17,7 @@ import static com.weddini.throttling.ThrottlingType.SpEL;
 
 
 public class ThrottlingEvaluatorImpl implements ThrottlingEvaluator {
-    private static final Log log = LogFactory.getLog(ThrottlingEvaluatorImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(ThrottlingEvaluatorImpl.class);
 
     private final SpElEvaluator spElEvaluator;
 

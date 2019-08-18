@@ -2,8 +2,8 @@ package com.weddini.throttling.support;
 
 import com.weddini.throttling.Throttling;
 import com.weddini.throttling.service.ThrottlingService;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class ThrottlingInterceptor extends HandlerInterceptorAdapter {
-    private static final Log logger = LogFactory.getLog(ThrottlingInterceptor.class);
+    private static final Logger logger = LoggerFactory.getLogger(ThrottlingInterceptor.class);
 
     private final ThrottlingService throttlingService;
 

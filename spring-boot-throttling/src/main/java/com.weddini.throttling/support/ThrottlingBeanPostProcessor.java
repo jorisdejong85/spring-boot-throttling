@@ -3,8 +3,8 @@ package com.weddini.throttling.support;
 import com.weddini.throttling.Throttling;
 import com.weddini.throttling.ThrottlingException;
 import com.weddini.throttling.service.ThrottlingService;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Controller;
@@ -29,7 +29,7 @@ import static org.springframework.core.annotation.AnnotationUtils.findAnnotation
  * @author Nikolay Papakha (nikolay.papakha@gmail.com)
  */
 public class ThrottlingBeanPostProcessor implements BeanPostProcessor {
-    private static final Log logger = LogFactory.getLog(BeanPostProcessor.class);
+    private static final Logger logger = LoggerFactory.getLogger(BeanPostProcessor.class);
 
     private final ThrottlingService throttlingService;
     private final Map<String, Class> beanNamesToOriginalClasses;

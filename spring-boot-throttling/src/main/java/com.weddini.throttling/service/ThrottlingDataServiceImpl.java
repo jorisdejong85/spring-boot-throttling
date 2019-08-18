@@ -1,18 +1,18 @@
 package com.weddini.throttling.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.weddini.throttling.ThrottlingGauge;
 import com.weddini.throttling.ThrottlingKey;
 import com.weddini.throttling.cache.Cache;
 import com.weddini.throttling.cache.CacheBuilder;
 import com.weddini.throttling.cache.CacheLoader;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 import java.util.concurrent.ExecutionException;
 
 
 public class ThrottlingDataServiceImpl implements ThrottlingDataService {
-    private static final Log log = LogFactory.getLog(ThrottlingDataServiceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(ThrottlingDataServiceImpl.class);
 
     private final Cache<ThrottlingKey, ThrottlingGauge> cache;
     private final CacheLoader<ThrottlingKey, ThrottlingGauge> gaugeLoader = key -> new ThrottlingGauge(key.getTimeUnit(), key.getLimit());
