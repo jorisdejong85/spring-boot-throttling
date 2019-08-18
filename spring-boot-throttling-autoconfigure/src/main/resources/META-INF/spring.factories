@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.weddini.throttling.autoconfigure.ThrottlingAutoConfiguration
+ro.rasel.throttling.autoconfigure.ThrottlingAutoConfiguration

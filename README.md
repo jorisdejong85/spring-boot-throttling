@@ -12,48 +12,7 @@ Please see [example project](https://github.com/weddini/spring-boot-throttling/t
 
 ### Getting Started
 
-#### Gradle setup
-
-Add maven repo to you project
-
-```groovy
-repositories {
- maven { url "https://raw.github.com/weddini/spring-boot-throttling/mvn-repo/" }
-}
-
-```
-
-Add the following code to dependencies section of your build.gradle:
-
-```groovy
-compile('com.weddini.throttling:spring-boot-throttling-starter:0.0.9')
-```
-
-#### Maven setup
-Add this GitHub repository to you project
-
-```xml
-<repositories>
-    <repository>
-        <id>spring-boot-throttling-repo</id>
-        <url>https://raw.github.com/weddini/spring-boot-throttling/mvn-repo/</url>
-        <snapshots>
-            <enabled>true</enabled>
-            <updatePolicy>always</updatePolicy>
-        </snapshots>
-    </repository>
-</repositories>
-```
-Add the following code to dependencies section of your pom.xml:
-
-```xml
-<dependency>
-    <groupId>com.weddini.throttling</groupId>
-    <artifactId>spring-boot-throttling-starter</artifactId>
-    <version>0.0.9</version>
-</dependency>
-```
-
+TODO
 
 ### Samples
 
