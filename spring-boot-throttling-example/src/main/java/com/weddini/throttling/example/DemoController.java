@@ -20,22 +20,16 @@ public class DemoController {
 
     @GetMapping("/SpEl/{userName}")
     public ResponseEntity<Model> spEl(@PathVariable(value = "userName") String userName) {
-        return ResponseEntity.ok(demoService.computeWithSpElThrottling(Model.builder()
-                .userName(userName)
-                .build()));
+        return ResponseEntity.ok(demoService.computeWithSpElThrottling(new Model(userName)));
     }
 
     @GetMapping("/header/{userName}")
     public ResponseEntity<Model> header(@PathVariable(value = "userName") String userName) {
-        return ResponseEntity.ok(demoService.computeWithHttpHeaderThrottling(Model.builder()
-                .userName(userName)
-                .build()));
+        return ResponseEntity.ok(demoService.computeWithHttpHeaderThrottling(new Model(userName)));
     }
 
     @GetMapping("/remoteAddr/{userName}")
     public ResponseEntity<Model> remoteAddr(@PathVariable(value = "userName") String userName) {
-        return ResponseEntity.ok(demoService.computeWithHttpRemoteAddrThrottling(Model.builder()
-                .userName(userName)
-                .build()));
+        return ResponseEntity.ok(demoService.computeWithHttpRemoteAddrThrottling(new Model(userName)));
     }
 }

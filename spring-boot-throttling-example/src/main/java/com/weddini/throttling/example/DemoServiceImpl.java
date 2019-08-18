@@ -2,14 +2,15 @@ package com.weddini.throttling.example;
 
 import com.weddini.throttling.Throttling;
 import com.weddini.throttling.ThrottlingType;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.TimeUnit;
 
-@Slf4j
 @Service
 public class DemoServiceImpl implements DemoService {
+    private static final Logger LOG = LoggerFactory.getLogger(DemoServiceImpl.class);
 
     /**
      * Throttling configuration:
@@ -24,7 +25,7 @@ public class DemoServiceImpl implements DemoService {
             type = ThrottlingType.SpEL,
             expression = "#model.userName")
     public Model computeWithSpElThrottling(Model model) {
-        log.info("computeWithSpElThrottling..., userName = {}", model.getUserName());
+        LOG.info("computeWithSpElThrottling..., userName = {}", model.getUserName());
         return model;
     }
 
@@ -40,7 +41,7 @@ public class DemoServiceImpl implements DemoService {
             type = ThrottlingType.HeaderValue,
             headerName = "X-Forwarded-For")
     public Model computeWithHttpHeaderThrottling(Model model) {
-        log.info("computeWithHttpHeaderThrottling..., userName = {}", model.getUserName());
+        LOG.info("computeWithHttpHeaderThrottling..., userName = {}", model.getUserName());
         return model;
     }
 
@@ -53,7 +54,7 @@ public class DemoServiceImpl implements DemoService {
     @Override
     @Throttling(limit = 5, timeUnit = TimeUnit.MINUTES)
     public Model computeWithHttpRemoteAddrThrottling(Model model) {
-        log.info("computeWithHttpRemoteAddrThrottling..., userName = {}", model.getUserName());
+        LOG.info("computeWithHttpRemoteAddrThrottling..., userName = {}", model.getUserName());
         return model;
     }
 }

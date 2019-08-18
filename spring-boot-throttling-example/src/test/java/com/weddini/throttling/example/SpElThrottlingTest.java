@@ -17,8 +17,8 @@ public class SpElThrottlingTest {
 
     @Test
     public void computeWithSpElThrottling() throws Exception {
-        Model model1 = Model.builder().userName("Misha").build();
-        Model model2 = Model.builder().userName("Vasya").build();
+        Model model1 = new Model("Misha");
+        Model model2 = new Model("Vasya");
 
         demoService.computeWithSpElThrottling(model1);
         demoService.computeWithSpElThrottling(model1);
